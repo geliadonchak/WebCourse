@@ -36,6 +36,10 @@ body {
     margin-top: 10px;
 }
 
+.content p {
+    text-indent: 20pt;
+}
+
 .side_left {
     float: left;
     width: 15%;
@@ -112,6 +116,10 @@ body {
     text-align: right;
 }
 
+.text-no-indent {
+    text-indent: 0px !important;
+}
+
 .ul-type-circle {
     list-style: circle;
 }
@@ -119,4 +127,22 @@ body {
 hr {
     border-top: 1px solid black;
     border-bottom: none;
+}
+
+@media print {
+    .header,
+    .side_left,
+    .side_right,
+    .footer,
+    img {
+        display: none;
+    }
+    
+    .main,
+    .content,
+    .main_block {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
 }
