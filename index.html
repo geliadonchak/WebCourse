@@ -9,6 +9,7 @@
     <link rel="icon" href="images/icon.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="styles/main.css">
 </head>
 
@@ -32,12 +33,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Главная</a>
+                            <a class="nav-link" href="#"><i class="fas fa-home"></i> Главная</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Страны
+                                <i class="fas fa-globe-americas"></i> Страны
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="countries/asia.html">Азия</a>
@@ -50,7 +51,7 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="recommended.html">Рекомендованное</a>
+                            <a class="nav-link" href="recommended.html"><i class="fas fa-star"></i> Рекомендованное</a>
                         </li>
                     </ul>
                 </div>
@@ -116,14 +117,14 @@
         <div class="card-deck col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8">
 
             <div class="card">
-                <img class="card-img-top" src="https://via.placeholder.com/1000x600/001122" alt="">
+                <img class="card-img-top" src="images/africa/egypt.jpg">
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">Card title</h5>
+                    <h5 class="card-title">Египет <span class="badge badge-pill badge-info align-top">New</span></h5>
                     <p class="card-text text-justify">
-                        Some quick example text to build on the card title Some quick example text to build
-                        on the card title and make up the bulk of the card'scontent.Some quick example text to build on
-                        the card title and
-                        make up the bulk of the card's content.
+                        Страна древнейшей цивилизации, <span class="glyphicon glyphicon-search"
+                                                             aria-hidden="true"></span>благословенный край, где круглый
+                        год светит яркое солнце, а море всегда теплое и прозрачное. Здесь Вы можете увидеть древние
+                        пирамиды и сфинкса, золотые сокровища и величественные храмы.
                     </p>
                     <a href="" class="mt-auto">
                         <button class="btn btn-outline-info mt-auto w-100">Читать полностью</button>
@@ -132,11 +133,11 @@
             </div>
 
             <div class="card">
-                <img class="card-img-top" src="https://via.placeholder.com/1000x600/001122" alt="">
+                <span class="border-bottom"><img class="card-img-top" src="images/europe/finland.jpg"></span>
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text text-justify">Some quick example text to build on the card title and make up the
-                        bulk of the card's content.</p>
+                    <h5 class="card-title">Финляндия</h5>
+                    <p class="card-text text-justify">Не менее трети этой страны расположено за Полярным кругом.
+                        Привлекают туристов такие интересные природные явления, как полярный день и полярная ночь.</p>
                     <a href="" class="mt-auto">
                         <button class="btn btn-outline-info mt-auto w-100">Читать полностью</button>
                     </a>
@@ -153,7 +154,6 @@
         <a class="text-info" href="https://github.com/geliadonchak/">github.com/geliadonchak</a>
     </div>
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
