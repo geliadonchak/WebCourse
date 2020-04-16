@@ -31,6 +31,10 @@ nav .dropdown-item:active {
     border-radius: 0 0 20px 20px;
 }
 
+.tooltip {
+    font-size: 13px;
+}
+
 #marginLeftRight {
     margin-left: 5px;
     margin-right: 5px;
