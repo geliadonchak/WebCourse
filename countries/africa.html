@@ -14,6 +14,28 @@
 </head>
 
 <body>
+<div class="modal" tabindex="-1" role="dialog" id="goToOldModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Переход на старую версию</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Осторожно, Вы переходите в Danger Zone. Вы уверены в своих действиях?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="../backup/tasks1-2/index.html">
+                    <button type="button" class="btn btn-info">Да, переходим</button>
+                </a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет, остаюсь</button>
+            </div>
+        </div>
+    </div>
+</div>
+    
 <div class="container-fluid">
 
     <div class="row justify-content-center">
@@ -33,12 +55,14 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="../index.html"><i class="fas fa-home"></i> Главная</a>
+                            <a class="nav-link" href="../index.html" data-toggle="tooltip" data-placement="bottom"
+                               title="Домашняя страница"><i class="fas fa-home"></i> Главная</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-globe-americas"></i> Страны
+                                <span data-toggle="tooltip"
+                                 data-placement="bottom" title="Список частей света"><i class="fas fa-globe-americas"></i> Страны</span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="asia.html">Азия</a>
@@ -51,13 +75,18 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../recommended.html"><i class="fas fa-star"></i> Рекомендованное</a>
+                            <a class="nav-link" href="../recommended.html" data-toggle="tooltip" data-placement="bottom"
+                               title="Наиболее популярные страны"><i class="fas fa-star"></i> Рекомендованное</a>
                         </li>
                     </ul>
+                    <button class="btn btn-outline-info my-2 my-sm-0" data-toggle="tooltip" data-placement="bottom"
+                            title="Предыдущие задания" onclick="$('#goToOldModal').modal('show')">Старая версия
+                    </button>
                 </div>
             </nav>
         </div>
     </div>
+
 
     <div class="row justify-content-center">
         <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8 ">
@@ -177,6 +206,11 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
 </body>
 
 </html>
