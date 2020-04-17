@@ -29,7 +29,9 @@
                 <p>Осторожно, Вы переходите в Danger Zone. Вы уверены в своих действиях?</p>
             </div>
             <div class="modal-footer">
-                <a href="backup/tasks1-2/index.html"><button type="button" class="btn btn-info">Да, переходим</button></a>
+                <a href="backup/tasks1-2/index.html">
+                    <button type="button" class="btn btn-info">Да, переходим</button>
+                </a>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет, остаюсь</button>
             </div>
         </div>
@@ -51,16 +53,18 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#" data-toggle="tooltip" data-placement="bottom" title="Домашняя страница"><i class="fas fa-home"></i> Главная</a>
+                            <a class="nav-link" href="#" data-toggle="tooltip" data-placement="bottom"
+                               title="Домашняя страница"><i class="fas fa-home"></i> Главная</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip" data-placement="bottom" title="Список частей света">
-                                <i class="fas fa-globe-americas"></i> Страны
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span data-toggle="tooltip"
+                                 data-placement="bottom" title="Список частей света"><i class="fas fa-globe-americas"></i> Страны</span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="countries/asia.html">Азия</a>
@@ -73,10 +77,13 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="recommended.html" data-toggle="tooltip" data-placement="bottom" title="Наиболее популярные страны"><i class="fas fa-star"></i> Рекомендованное</a>
+                            <a class="nav-link" href="recommended.html" data-toggle="tooltip" data-placement="bottom"
+                               title="Наиболее популярные страны"><i class="fas fa-star"></i> Рекомендованное</a>
                         </li>
                     </ul>
-                    <button class="btn btn-outline-info my-2 my-sm-0" data-toggle="tooltip" data-placement="bottom" title="Предыдущие задания" onclick="$('#goToOldModal').modal('show')">Старая версия</button>
+                    <button class="btn btn-outline-info my-2 my-sm-0" data-toggle="tooltip" data-placement="bottom"
+                            title="Предыдущие задания" onclick="$('#goToOldModal').modal('show')">Старая версия
+                    </button>
                 </div>
             </nav>
         </div>
@@ -149,7 +156,7 @@
                         пирамиды и сфинкса, золотые сокровища и величественные храмы.
                     </p>
                     <a href="" class="mt-auto">
-                        <button class="btn btn-outline-info mt-auto w-100" data-toggle="tooltip" data-placement="left" title="Переход на страницу страны">Читать полностью</button>
+                        <button class="btn btn-outline-info mt-auto w-100">Читать полностью</button>
                     </a>
                 </div>
             </div>
@@ -161,7 +168,7 @@
                     <p class="card-text text-justify">Не менее трети этой страны расположено за Полярным кругом.
                         Привлекают туристов такие интересные природные явления, как полярный день и полярная ночь.</p>
                     <a href="" class="mt-auto">
-                        <button class="btn btn-outline-info mt-auto w-100" data-toggle="tooltip" data-placement="right" title="Переход на страницу страны">Читать полностью</button>
+                        <button class="btn btn-outline-info mt-auto w-100">Читать полностью</button>
                     </a>
                 </div>
             </div>
