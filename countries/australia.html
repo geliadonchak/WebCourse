@@ -7,126 +7,240 @@
     <title>Австралия</title>
 
     <link rel="icon" href="../images/icon.png">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="../styles/main.css">
 </head>
 
 <body>
-<div class="modal" tabindex="-1" role="dialog" id="goToOldModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Переход на старую версию</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Осторожно, Вы переходите в Danger Zone. Вы уверены в своих действиях?</p>
-            </div>
-            <div class="modal-footer">
-                <a href="../backup/tasks1-2/index.html">
-                    <button type="button" class="btn btn-info">Да, переходим</button>
-                </a>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет, остаюсь</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container-fluid">
-
-    <div class="row justify-content-center">
-        <div class="col-12 nopadding">
-            <nav class="navbar navbar-dark navbar-expand-sm bg-dark">
-                <a class="navbar-brand" href="#">
-                    <img src="../images/icon.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                    GeGeo
-                </a>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="../index.html" data-toggle="tooltip" data-placement="bottom"
-                               title="Домашняя страница"><i class="fas fa-home"></i> Главная</a>
-                        </li>
-                        <li class="nav-item dropdown active">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span data-toggle="tooltip"
-                                 data-placement="bottom" title="Список частей света"><i class="fas fa-globe-americas"></i> Страны</span>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="asia.html">Азия</a>
-                                <a class="dropdown-item" href="america.html">Америка</a>
-                                <a class="dropdown-item" href="africa.html">Африка</a>
-                                <a class="dropdown-item" href="europe.html">Европа</a>
-                                <a class="dropdown-item" href="oceania.html">Океания</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Автралия</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../recommended.html" data-toggle="tooltip" data-placement="bottom"
-                               title="Наиболее популярные страны"><i class="fas fa-star"></i> Рекомендованное</a>
-                        </li>
-                    </ul>
-                    <button class="btn btn-outline-info my-2 my-sm-0" data-toggle="tooltip" data-placement="bottom"
-                            title="Предыдущие задания" onclick="$('#goToOldModal').modal('show')">Старая версия
+    <div class="modal" tabindex="-1" role="dialog" id="goToOldModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Переход на старую версию</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-            </nav>
+                <div class="modal-body">
+                    <p>Осторожно, Вы переходите в Danger Zone. Вы уверены в своих действиях?</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="../backup/tasks1-2/index.html">
+                        <button type="button" class="btn btn-info">Да, переходим</button>
+                    </a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет, остаюсь</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+
+        <div class="row justify-content-center">
+            <div class="col-12 nopadding">
+                <nav class="navbar navbar-dark navbar-expand-sm bg-dark">
+                    <a class="navbar-brand" href="#">
+                        <img src="../images/icon.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                        GeGeo
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="../index.html" data-toggle="tooltip" data-placement="bottom" title="Домашняя страница"><i class="fas fa-home"></i> Главная</a>
+                            </li>
+                            <li class="nav-item dropdown active">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span data-toggle="tooltip" data-placement="bottom" title="Список частей света"><i class="fas fa-globe-americas"></i> Страны</span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="asia.html">Азия</a>
+                                    <a class="dropdown-item" href="america.html">Америка</a>
+                                    <a class="dropdown-item" href="africa.html">Африка</a>
+                                    <a class="dropdown-item" href="europe.html">Европа</a>
+                                    <a class="dropdown-item" href="oceania.html">Океания</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Автралия</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="../recommended.html" data-toggle="tooltip" data-placement="bottom" title="Наиболее популярные страны"><i class="fas fa-star"></i> Рекомендованное</a>
+                            </li>
+                        </ul>
+                        <button class="btn btn-outline-info my-2 my-sm-0" data-toggle="tooltip" data-placement="bottom" title="Предыдущие задания" onclick="$('#goToOldModal').modal('show')">Старая версия
+                        </button>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+
+        <div class="row justify-content-center">
+            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8 ">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-1">
+                        <li class="breadcrumb-item">Главная</li>
+                        <li class="breadcrumb-item">Страны</li>
+                        <li class="breadcrumb-item">Австралия</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8">
+                <p class="h1 py-2 text-center bg-white opacity60">Австралия</p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8">
+                <div class="bg-white opacity60 p-2">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active text-info" id="about-country-tab" data-toggle="tab" href="#aboutCountry" role="tab" aria-controls="aboutCountry" aria-selected="true">О стране</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-info" id="country-table1-tab" data-toggle="tab" href="#countryTable1" role="tab" aria-controls="countryTable1" aria-selected="true">Таблица 1</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-info" id="country-table2-tab" data-toggle="tab" href="#countryTable2" role="tab" aria-controls="countryTable2" aria-selected="true">Таблица 2</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-info" id="country-table3-tab" data-toggle="tab" href="#countryTable3" role="tab" aria-controls="countryTable3" aria-selected="true">Таблица 3</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="aboutCountry" role="tabpanel" aria-labelledby="about-country-tab">
+                            <div class="media bg-white border p-3">
+                                <img src="../images/icon.png" alt="John Doe" class="rounded-circle align-self-center mr-3" style="width:60px;">
+                                <div class="media-body">
+                                    <h4>John Doe <small><i>Posted on February 19, 2016</i></small></h4>
+                                    Lorem ipsumipsumipsumipsumipsumipsumipsumipsumi psumipsumipsumipsumips umipsumipsumipsumipsumipsumipsumipsumipsumipsumipsumipsumipsumipsumip sumнепредрасположенный...
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade table-responsive" id="countryTable1" role="tabpanel" aria-labelledby="country-table1-tab">
+                            <table class="table table-striped bg-white">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">adasdas</th>
+                                        <th scope="col">Last</th>
+                                        <th scope="col">Handle</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Marasdaskjdahsjdahkk</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>@fat</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade table-responsive" id="countryTable2" role="tabpanel" aria-labelledby="country-tabl2-tab">
+                            <table class="table bg-light">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">A</th>
+                                        <th scope="col">B</th>
+                                        <th scope="col">C</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>zxc</td>
+                                        <td>sdvv</td>
+                                        <td>qweqwe</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>qwe</td>
+                                        <td>qweew</td>
+                                        <td>asdasd</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>head</td>
+                                        <td>asd</td>
+                                        <td>qwe</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade table-responsive" id="countryTable3" role="tabpanel" aria-labelledby="country-table3-tab">
+                            <table class="table table-light table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">First</th>
+                                        <th scope="col">Last</th>
+                                        <th scope="col">Handle</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>@fat</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry the Bird</td>
+                                        <td>Larry</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer bg-dark justify-content-center mg-0 pg-0">
+        <div class="text-center text-light">&copy; 2020 - Ангелина Дончак -
+            <a class="text-info" href="https://github.com/geliadonchak/">github.com/geliadonchak</a>
         </div>
     </div>
 
-
-    <div class="row justify-content-center">
-        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8 ">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-1">
-                    <li class="breadcrumb-item">Главная</li>
-                    <li class="breadcrumb-item">Страны</li>
-                    <li class="breadcrumb-item">Австралия</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-
-    <div class="row justify-content-center">
-        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8">
-            <p class="h1 py-2 text-center bg-white opacity60">Австралия</p>
-        </div>
-    </div>
-
-</div>
-
-<div class="footer bg-dark justify-content-center mg-0 pg-0">
-    <div class="text-center text-light">&copy; 2020 - Ангелина Дончак - 
-        <a class="text-info" href="https://github.com/geliadonchak/">github.com/geliadonchak</a>
-    </div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-</script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 </body>
 
 </html>
