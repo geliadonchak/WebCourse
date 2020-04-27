@@ -1,0 +1,36 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    background-color: rgb(176, 211, 222) !important;
+    margin: 0 0 50px;
+}
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+.tooltip {
+    font-size: 13px;
+}
+
+#marginLeftRight {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.opacity60 {
+    background: rgba(255, 255, 255, .6) !important;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+}
+

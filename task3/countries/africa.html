@@ -4,18 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Рекомендованные</title>
+    <title>Африка</title>
 
-    <link rel="icon" href="images/icon.png">
+    <link rel="icon" href="../images/icon.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-    <link rel="stylesheet" href="styles/main.css">
-
+    <link rel="stylesheet" href="../styles/main.css">
 </head>
 
 <body>
-
 <div class="modal" tabindex="-1" role="dialog" id="goToOldModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -29,7 +27,7 @@
                 <p>Осторожно, Вы переходите в Danger Zone. Вы уверены в своих действиях?</p>
             </div>
             <div class="modal-footer">
-                <a href="backup/tasks1-2/index.html">
+                <a href="../../task2/index.html">
                     <button type="button" class="btn btn-info">Да, переходим</button>
                 </a>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет, остаюсь</button>
@@ -37,14 +35,14 @@
         </div>
     </div>
 </div>
-
-<div class="container-fluid mt-auto">
+    
+<div class="container-fluid">
 
     <div class="row justify-content-center">
         <div class="col-12 nopadding">
             <nav class="navbar navbar-dark navbar-expand-sm bg-dark">
                 <a class="navbar-brand" href="#">
-                    <img src="images/icon.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                    <img src="../images/icon.png" width="30" height="30" class="d-inline-block align-top" alt="">
                     GeGeo
                 </a>
 
@@ -57,27 +55,27 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.html" data-toggle="tooltip" data-placement="bottom"
+                            <a class="nav-link" href="../index.html" data-toggle="tooltip" data-placement="bottom"
                                title="Домашняя страница"><i class="fas fa-home"></i> Главная</a>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span data-toggle="tooltip"
                                  data-placement="bottom" title="Список частей света"><i class="fas fa-globe-americas"></i> Страны</span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="countries/asia.html">Азия</a>
-                                <a class="dropdown-item" href="countries/america.html">Америка</a>
-                                <a class="dropdown-item" href="countries/africa.html">Африка</a>
-                                <a class="dropdown-item" href="countries/europe.html">Европа</a>
-                                <a class="dropdown-item" href="countries/oceania.html">Океания</a>
+                                <a class="dropdown-item" href="asia.html">Азия</a>
+                                <a class="dropdown-item" href="america.html">Америка</a>
+                                <a class="dropdown-item" href="#">Африка</a>
+                                <a class="dropdown-item" href="europe.html">Европа</a>
+                                <a class="dropdown-item" href="oceania.html">Океания</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="countries/australia.html">Автралия</a>
+                                <a class="dropdown-item" href="australia.html">Автралия</a>
                             </div>
                         </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#" data-toggle="tooltip" data-placement="bottom"
+                        <li class="nav-item">
+                            <a class="nav-link" href="../recommended.html" data-toggle="tooltip" data-placement="bottom"
                                title="Наиболее популярные страны"><i class="fas fa-star"></i> Рекомендованное</a>
                         </li>
                     </ul>
@@ -89,36 +87,48 @@
         </div>
     </div>
 
+
     <div class="row justify-content-center">
-        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8">
-            <p class="h1 py-2 text-center bg-white opacity60">Страны, отмеченные как "Hot"</p>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8 ">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item">Главная</li>
+                    <li class="breadcrumb-item">Страны</li>
+                    <li class="breadcrumb-item">Африка</li>
+                </ol>
+            </nav>
         </div>
     </div>
 
+    <div class="row justify-content-center">
+        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8">
+            <p class="h1 py-2 text-center bg-white opacity60">Страны Африки</p>
+        </div>
+    </div>
 
     <div class="row justify-content-center">
+        <div class="card-deck col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8 justify-content-center">
 
-        <div class="card-deck col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8">
             <div class="card">
-                <img class="card-img-top" src="images/asia/vietnam.jpg">
+                <img class="card-img-top" src="../images/africa/egypt.jpg">
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">Вьетнам <span class="badge badge-pill badge-danger align-top">Hot</span></h5>
-                    <p class="card-text text-justify">Красота природы, величественные дельты рек, бриллиантовая зелень
-                        рисовых полей, белые песчаные пляжи, буйная тропическая растительность - все это Вьетнам</p>
-                    <a href="" class="mt-auto">
+                    <h5 class="card-title">Египет <span class="badge badge-pill badge-info align-top">New</span></h5>
+                    <p class="card-text text-justify">Страна древнейшей цивилизации, благословенный край, где круглый
+                        год светит яркое солнце, а море всегда теплое и прозрачное. Здесь Вы можете увидеть древние
+                        пирамиды и сфинкса, золотые сокровища и величественные храмы.</p>
+                    <a href="egypt.html" class="mt-auto">
                         <button class="btn btn-outline-info mt-auto w-100">Читать полностью</button>
                     </a>
                 </div>
             </div>
 
             <div class="card">
-                <img class="card-img-top" src="images/europe/germany.jpg">
+                <span class="border-bottom"><img class="card-img-top" src="../images/africa/madagascar.jpg"></span>
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">Германия <span class="badge badge-pill badge-danger align-top">Hot</span>
-                    </h5>
-                    <p class="card-text text-justify"> Древняя германская земля встретит Вас большим кличеством
-                        памятников культуры: церкви, монастыри, дворцы, замки, средневековые города с каменными
-                        крепостными стенами и узкими мощеными улочками.</p>
+                    <h5 class="card-title">Мадагаскар</h5>
+                    <p class="card-text text-justify">Мадагаскар представляет собой «континент в миниатюре», буквально
+                        переполненный экзотическими формами жизни, многие из которых встречаются только на этом
+                        острове.</p>
                     <a href="" class="mt-auto">
                         <button class="btn btn-outline-info mt-auto w-100">Читать полностью</button>
                     </a>
@@ -130,16 +140,17 @@
             </div>
 
             <div class="card">
-                <img class="card-img-top" src="images/europe/italy.jpg">
+                <img class="card-img-top" src="../images/africa/morocco.jpg">
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">Италия <span class="badge badge-pill badge-danger align-top">Hot</span></h5>
-                    <p class="card-text text-justify">Италия является одной из самых интересных, уникальных, красивых
-                        стран в мире. Эта страна имеет свой неповторимый характер, свой колорит и, можно сказать, свой
-                        характерный темперамент.</p>
+                    <h5 class="card-title">Марокко <span class="badge badge-pill badge-info align-top">New</span></h5>
+                    <p class="card-text text-justify">Это кладезь исторических памятников, которые давно привлекают
+                        археологов и любопытных туристов. Благоприятный климат и теплые воды я ставят марокканское
+                        побережье в один ряд с самыми известными курортными зонами.</p>
                     <a href="" class="mt-auto">
                         <button class="btn btn-outline-info mt-auto w-100">Читать полностью</button>
                     </a>
                 </div>
+
             </div>
 
             <div class="w-100 d-none d-xl-block">
@@ -147,24 +158,7 @@
             </div>
 
             <div class="card">
-                <img class="card-img-top" src="images/asia/china.jpg">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">Китай <span class="badge badge-pill badge-danger align-top">Hot</span></h5>
-                    <p class="card-text text-justify">Страна с богатым прошлым и не менее интересным настоящим,
-                        соединяющая в себе верность традициям одной из древнейших мировых цивилизаций и современный ритм
-                        жизни мегаполисов.</p>
-                    <a href="" class="mt-auto">
-                        <button class="btn btn-outline-info mt-auto w-100">Читать полностью</button>
-                    </a>
-                </div>
-            </div>
-
-            <div class="w-100 d-none d-sm-block d-xl-none">
-                <!-- wrap every 2 on sm-->
-            </div>
-
-            <div class="card">
-                <img class="card-img-top" src="images/africa/seychelles.jpg">
+                <img class="card-img-top" src="../images/africa/seychelles.jpg">
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">Сейшелы <span class="badge badge-pill badge-danger align-top">Hot</span></h5>
                     <p class="card-text text-justify">Сейшельские острова — потерянный и обретенный рай в сердце
@@ -176,46 +170,17 @@
                 </div>
             </div>
 
-            <div class="card">
-                <img class="card-img-top" src="images/america/usa.jpg">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">США <span class="badge badge-pill badge-danger align-top">Hot</span></h5>
-                    <p class="card-text text-justify">Здесь строгая красота Ниагары сменяется беспечностью солнечной
-                        Флориды, а синева Тихого океана безумством красок неоновых огней Лас-Вегаса.</p>
-                    <a href="" class="mt-auto">
-                        <button class="btn btn-outline-info mt-auto w-100">Читать полностью</button>
-                    </a>
-                </div>
-            </div>
-
-            <div class="w-100 d-none d-xl-block">
-                <!-- wrap every 3 on xl-->
-            </div>
-
             <div class="w-100 d-none d-sm-block d-xl-none">
                 <!-- wrap every 2 on sm-->
             </div>
-            
+
             <div class="card">
-                <img class="card-img-top" src="images/asia/thailand.jpg">
+                <img class="card-img-top" src="../images/africa/sa.jpg">
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">Таиланд <span class="badge badge-pill badge-danger align-top">Hot</span></h5>
-                    <p class="card-text text-justify">Что есть в Таиланде — вопрос риторический. Без преувеличения —
-                        все: первозданные пляжи на островах и угар дискотек, древние храмы и потрясающий подводный
-                        мир. </p>
-                    <a href="" class="mt-auto">
-                        <button class="btn btn-outline-info mt-auto w-100">Читать полностью</button>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="card">
-                <img class="card-img-top" src="images/europe/france.jpg">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">Франция <span class="badge badge-pill badge-danger align-top">Hot</span></h5>
-                    <p class="card-text text-justify">Это центр европейской моды, культуры, родина любви. Здесь
-                        сочетаются пляжи Лазурного побережья, горнолыжные курорты французских Альп и средневековая
-                        архитектура древнейших городов. </p>
+                    <h5 class="card-title">ЮАР</h5>
+                    <p class="card-text text-justify">Самый край Африки, ЮАР — взрывная смесь первобытной экзотики и
+                        рациональной современности. Променады Кейптауна и слоны в Крюгер-парке, лучшие пляжи планеты и
+                        тропики Лимпопо.</p>
                     <a href="" class="mt-auto">
                         <button class="btn btn-outline-info mt-auto w-100">Читать полностью</button>
                     </a>
@@ -223,10 +188,11 @@
             </div>
         </div>
     </div>
+
 </div>
 
 <div class="footer bg-dark justify-content-center mg-0 pg-0">
-    <div class="text-center text-light">&copy; 2020 - Ангелина Дончак -
+    <div class="text-center text-light">&copy; 2020 - Ангелина Дончак - 
         <a class="text-info" href="https://github.com/geliadonchak/">github.com/geliadonchak</a>
     </div>
 </div>
