@@ -65,10 +65,72 @@
             let n = +document.getElementById("n").value;
 
             let arr = getArray(n);
+            let sortedArray = getResultArray(arr).join(" ")
             document.getElementById("generatedArray").value = arr.join(" ");
-            document.getElementById("sortedArray").value = getResultArray(arr).join(" ");
-            console.log(arr.join(" "));
-            console.log(getResultArray(arr).join(" "));
+            document.getElementById("sortedArray").value = sortedArray;
+            document.getElementById("array").value = sortedArray;
+        }
+
+        function makeArray() {
+            let data = document.getElementById("array").value.trim();
+            let regexp = /^(-?\d+ )*(-?\d+)$/;
+
+            if (!data.match(regexp)) {
+                alert("Неверный формат, введите числа через пробел");
+                return;
+            }
+
+            data = data.split(" ");
+            if (!Number.isInteger(Math.sqrt(data.length))) {
+                alert("Не получится составить двумерную матрицу из этого числа элементов");
+                return;
+            }
+
+            data = getResultArray(data.map(x => +x));
+
+            let n = Math.sqrt(data.length);
+            let A = [];
+            for (let i = 0; i < n; i++) {
+                A[i] = [];
+            }
+
+            let index = 0;
+            for (let i = 0; i < n; i++) {
+                if (i % 2 == 0) {
+                    for (let j = 0; j < n; j++) {
+                        A[j][i]  = data[index++];
+                    }
+                } else {
+                    for (let j = n - 1; j >= 0; j--) {
+                        A[j][i] = data[index++];
+                    }
+                }
+            }
+
+            let html = "<table class=\"table text-center table-bordered table-responsive\">";
+            for (let i = 0; i < n; i++) {
+                html += "<tr>";
+                for (let j = 0; j < n; j++) {
+                    html += "<td>" + A[i][j] + "</td>";
+                }
+                html += "</tr>";
+            }
+            html += "</table>";
+
+            document.getElementById("snakeArray").innerHTML = html;
+        }
+
+        function clearFirst() {
+            document.getElementById("min").value = "";
+            document.getElementById("max").value = "";
+            document.getElementById("n").value = "";
+            document.getElementById("generatedArray").value = "";
+            document.getElementById("sortedArray").value = "";
+        }
+
+        function clearSecond() {
+            document.getElementById("array").value = "";
+            document.getElementById("snakeArray").innerHTML = "";
         }
     </script>
 
@@ -160,9 +222,11 @@
                         <label for="n">Введите количество эллементов массива</label>
                         <input id="n" type="number" step="0.01" class="form-control" min="0" required>
                     </div>
-                    <button class="btn btn-info mb-2" type="submit">Сделать хорошо</button>
                     
+                    <button class="btn btn-info mb-2" type="submit">Сделать хорошо</button>
+                    <button class="btn btn-info mb-2" type="button" onclick="clearFirst()">Очистить</button>
                     <hr>
+                    
                     <div class="form-group mx-0 mb-2">
                         <label for="generatedArray">Сгенерированный массив</label>
                         <input id="generatedArray" readonly type="text" class="form-control">
@@ -185,19 +249,18 @@
     <div class="row justify-content-center">
         <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8">
             <div class="bg-white opacity60 text-justify p-2">
-                <form class="form col-sm-12" action="javascript:void(0);"> 
+                <form class="form col-sm-12" onsubmit="makeArray()" action="javascript:void(0);"> 
                     <div class="form-group mx-0 mb-2">
-                        <label for="array">Введитe массив</label>
-                        <input id="array" type="text"  class="form-control">
+                        <label for="array">Введитe массив (через пробел, без знаков препинания)</label>
+                        <input id="array" type="text" class="form-control" required>
                     </div>
-                    <button class="btn btn-info mb-2" type="button" onclick="ar">Сортировать</button>
                     
+                    <button class="btn btn-info mb-2" type="submit">Расположить змейкой</button>
+                    <button class="btn btn-info mb-2" type="button" onclick="clearSecond()">Очистить</button>
                     <hr>
-                    <div class="form-group mx-0 mb-2">
-                        <label for="result2">Результат</label>
-                        <input id="result2" readonly type="number" class="form-control">
-                    </div>
                 </form>
+
+                <div id="snakeArray" class="col-sm-12"></div>
             </div>
         </div>
     </div>

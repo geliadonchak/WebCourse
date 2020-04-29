@@ -31,6 +31,11 @@
 
             document.getElementById("result").value = sum;
         }
+
+        function clearData() {
+            document.getElementById("x").value = "";
+            document.getElementById("result").value = "";
+        }
     </script>
 
 </head>
@@ -113,7 +118,11 @@
                         <label for="x">Поиск суммы элементов расходщегося ряда x+(3x+1)+(5x+2)+...+((2n+1)x+n), абсолютные величины которых не превышают 500.<br><br>Введите x</label>
                         <input id="x" type="number" step="0.01" class="form-control" required>
                     </div>
-                    <button class="btn btn-info mb-2" type="submit">Рассчитать</button><hr>
+                    
+                    <button class="btn btn-info mb-2" type="submit">Рассчитать</button>
+                    <button class="btn btn-info mb-2" type="button" onclick="clearData()">Очистить</button>
+                    <hr>
+
                     <div class="form-group mx-0 mb-2">
                         <label for="result">Результат</label>
                         <input id="result" readonly type="number" class="form-control">

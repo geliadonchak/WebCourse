@@ -17,6 +17,11 @@
             let a = document.getElementById("square_side").value;
             document.getElementById("result").value = a * a;
         }
+
+        function clearData() {
+            document.getElementById("square_side").value = "";
+            document.getElementById("result").value = "";
+        }
     </script>
 
 </head>
@@ -99,7 +104,11 @@
                         <label for="square_side">Введите длину стороны квадрата</label>
                         <input id="square_side" type="number" step="0.01" class="form-control" min="0" required>
                     </div>
-                    <button class="btn btn-info mb-2" type="submit">Рассчитать</button><hr>
+
+                    <button class="btn btn-info mb-2" type="submit">Рассчитать</button>
+                    <button class="btn btn-info mb-2" type="button" onclick="clearData()">Очистить</button>
+                    <hr>
+                    
                     <div class="form-group mx-0 mb-2">
                         <label for="result">Результат</label>
                         <input id="result" readonly type="number" class="form-control">
