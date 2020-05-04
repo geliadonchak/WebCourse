@@ -25,7 +25,7 @@
 
     <script>
         function getRandomInt(min, max) {
-            return Math.round(Math.random() * (max - min) + min);
+            return Math.round(Math.random() * (max - min - 1) + min);
         }
 
         function getArray(n) {
@@ -33,7 +33,7 @@
             let max = +document.getElementById("max").value;
 
             if (min >= max) {
-                alert("Min >= Max");
+                alert("Min должен быть меньше Max");
                 return;
             }
 
@@ -73,7 +73,7 @@
 
         function makeArray() {
             let data = document.getElementById("array").value.trim();
-            let regexp = /^(-?\d+ )*(-?\d+)$/;
+            let regexp = /^(-?\d+(.\d+)? )*(-?\d+(.\d+)?)$/;
 
             if (!data.match(regexp)) {
                 alert("Неверный формат, введите числа через пробел");
