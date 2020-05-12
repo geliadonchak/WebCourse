@@ -1,0 +1,199 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+    <script>
+        function getData(data) {
+            let ul = document.createElement('ul');
+            
+            for (let i = 0; i < data.length; i++) {
+                let li = document.createElement('li');
+                let text = document.createTextNode(data[i].text);
+                li.appendChild(text);
+
+                if (data[i].children.length > 0) {
+                    let children = getData(data[i].children);
+                    li.appendChild(children);
+                }
+
+                ul.appendChild(li);
+            }
+
+            return ul;
+        }
+
+        function parseDOM(node) {
+            console.log('nodeType = ' + node.nodeType + '; nodeName = ' + node.nodeName);
+            let children = node.childNodes;
+
+            for (let i = 0; i < children.length; i++) {
+                if (children[i].nodeType == 3) continue;
+                parseDOM(children[i]);
+            }
+        }
+
+        let biota = [
+            {
+                text: 'Бактерии',
+                children: [
+                    {
+                        text: 'Пневмококк',
+                        children: []
+                    },
+                    {
+                        text: 'Сальмонелла',
+                        children: []
+                    },
+                    {
+                        text: 'Золотистый стафилококк',
+                        children: []
+                    },
+                    {
+                        text: 'Хеликобактер пилори',
+                        children: []
+                    }
+                ] 
+            },
+            {
+                text: 'Археи',
+                children: [
+                    {
+                        text: 'Галобактерия',
+                        children: []
+                    },
+                    {
+                        text: 'Метанобактерия',
+                        children: []
+                    },
+                    {
+                        text: 'Метанококк',
+                        children: []
+                    },
+                    {
+                        text: 'Корархеот',
+                        children: []
+                    }
+                ]
+            },
+            {
+                text: 'Эукариоты',
+                children: [
+                    {
+                        text: 'Простейшие',
+                        children: [
+                            {
+                                text: 'Амёба',
+                                children: []
+                            },
+                            {
+                                text: 'Эвглена зелёная',
+                                children: []
+                            },
+                            {
+                                text: 'Инфузория-туфелька',
+                                children: []
+                            }
+                        ]
+                    },
+                    {
+                        text: 'Хромисты',
+                        children: [
+                            {
+                                text: 'Ризария',
+                                children: []
+                            },
+                            {
+                                text: 'Ламинария',
+                                children: []
+                            },
+                            {
+                                text: 'Фукус',
+                                children: []
+                            }
+                        ]
+                    },
+                    {
+                        text: 'Грибы',
+                        children: [
+                            {
+                                text: 'Опенок',
+                                children: []
+                            },
+                            {
+                                text: 'Сыроежка',
+                                children: []
+                            },
+                            {
+                                text: 'Белый гриб',
+                                children: []
+                            }
+                        ]
+                    },
+                    {
+                        text: 'Растения',
+                        children: [
+                            {
+                                text: 'Клёен',
+                                children: []
+                            },
+                            {
+                                text: 'Орешник',
+                                children: []
+                            },
+                            {
+                                text: 'Крапива',
+                                children: []
+                            }
+                        ]
+                    },
+                    {
+                        text: 'Животные',
+                        children: [
+                            {
+                                text: 'Стрекоза',
+                                children: []
+                            },
+                            {
+                                text: 'Жираф',
+                                children: []
+                            },
+                            {
+                                text: 'Акула',
+                                children: []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                text: 'Вирусы',
+                children: [
+                    {
+                        text: 'Вирус оспы',
+                        children: []
+                    },
+                    {
+                        text: 'Вирус герпеса',
+                        children: []
+                    },
+                    {
+                        text: 'Гепатит',
+                        children: []
+                    },
+                    {
+                        text: 'Вирус Кори',
+                        children: []
+                    }
+                ]
+            }
+        ];
+
+        document.body.appendChild(getData(biota));
+
+        parseDOM(document.getElementsByTagName("html")[0]);
+
+    </script>
+</body>
+</html>
