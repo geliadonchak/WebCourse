@@ -1,192 +1,30 @@
-<html>
+<html lang="ru">
 <head>
-	<title>Canvas & Mootools</title>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mootools/1.6.0/mootools-core.js"></script>
-	<script type="text/javascript">
-        let canvas, ctx, idTimer;        
-        let figures = [];
-        let started = false;
-        let speed = 1;
-        let saved_direction = 0;
-        
-        // Право, лево, верх, низ, хаос
-        let dirs = {
-            0: [1, 0], 
-            1: [-1, 0],
-            2: [0, -1],
-            3: [0, 1],
-            4: [NaN, NaN],
-        };
-
-        TFigure = new Class({
-            x: 0,
-            y: 0,
-            color: "rgb(0,0,0)",
-            direction: null,
-
-            initialize: function(x, y) {
-                this.x = x;
-                this.y = y;
-
-                this.color = this.rndColor();
-            },
-
-            rndColor: function() {
-                return 'rgb('+Math.floor(Math.random() * 256) + ','
-                    +Math.floor(Math.random()*256) + ','
-                    +Math.floor(Math.random()*256) + ')';
-            },
-
-            move: function() {
-                with (this) {
-                    let dir = dirs[direction];
-                    if (direction == 4) {
-                        dir = dirs[rndDirection()];
-                    }
-
-                    x += speed * dir[0];
-                    y += speed * dir[1];
-                }
-            },
-
-            setDirection: function(dir) {
-                this.direction = dir;
-            }
-        });
-
-        TBall = new Class({
-            Extends: TFigure,
-            
-            radius: 0,
-
-            initialize: function(x, y) {
-				this.parent(x, y);
-				this.radius = 5 + Math.random() * 25;
-			},
-            
-            colorBall: function(){
-				with (this){
-					var gradient = ctx.createRadialGradient(x+radius/4,
-					y-radius/6, radius/8, x, y, radius);
-					gradient.addColorStop(0, '#fff');
-					gradient.addColorStop(0.85, color);
-					return gradient;
-				}
-            },
-            
-			draw: function() {
-				with (this) {
-					ctx.fillStyle = colorBall(ctx);
-					ctx.beginPath();
-					ctx.arc(x, y, radius, 0, 2*Math.PI, false);
-					ctx.closePath();
-					ctx.fill();
-				}
-			}
-        });
-        
-
-        function rndDirection() {
-            return +Math.floor(Math.random() * 4);
+    <title>Canvas & Mootools</title>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mootools/1.6.0/mootools-core.js"></script>
+    <script type="text/javascript" src="code.js"></script>
+    <meta charset="utf-8">
+    <style type="text/css">
+        canvas {
+            border: 1px solid black;
         }
-
-		function drawBackground() {
-            ctx.save();
-			let gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-			gradient.addColorStop(1,'#202020');
-			gradient.addColorStop(0,'#AAAAAA');
-			ctx.fillStyle = gradient;
-			ctx.fillRect(0,0, canvas.width, canvas.height);
-			ctx.restore();
-        }
-        
-
-		function init(){
-			canvas = document.getElementById('canvas');
-			if (canvas.getContext) {
-                ctx = canvas.getContext('2d');
-                drawBackground();
-				figures = [];
-				for (let i = 1; i <= 10; i++) {
-                    let place = getRandomPlace(canvas);
-                    newFigure(place[0], place[1]);
-				}
-			}
-        }
-
-        function getRandomPlace(canvas) {
-            return [
-                10 + Math.random() * (canvas.width - 30), 
-                10 + Math.random() * (canvas.height - 30)
-            ];
-        }
-        
-		function newFigure(x, y) {
-            var item = new TBall(x, y);
-            item.setDirection(saved_direction == 5 ? rndDirection() : saved_direction);
-            figures.push(item);
-            item.draw(ctx);
-        }
-        
-		function moveFigures() {
-            drawBackground();
-			for (var i = 0; i < figures.length;i){
-                figures[i].move();
-				figures[i].draw();
-				if (figures[i].x > canvas.width || figures[i].x < 0 || figures[i].y < 0 || figures[i].y > canvas.height) 
-                    figures.splice(i,1);
-				else 
-					i++;
-			}
-        }
-        
-        function setDirections() {
-            for (let i = 0; i < figures.length; i++) {
-                if (saved_direction == 5) {
-                    figures[i].setDirection(rndDirection());
-                    continue;    
-                }   
-                
-                figures[i].setDirection(saved_direction);
-            }
-        }
-        
-		function move(dir) {
-            saved_direction = dir;
-            setDirections();
-
-            if (!started) {
-                started = true;
-                idTimer = setInterval('moveFigures();', 50);
-            }
-        }
-
-        function changeSpeed(s) {
-            speed += speed + s >= 0 ? s : 0;
-        }
-        
-        function stop() {
-            started = false;
-            clearInterval(idTimer);     
-        }
-	</script>
-	<style type="text/css">
-		canvas { border: 1px solid black; }
-	</style>
+    </style>
 </head>
 <body onload="init();">
-	<canvas id="canvas" width="600" height="400" onclick="newFigure(event.clientX, event.clientY);">
-	</canvas>
-	<form>
-        <input type = "button" value = "Вправо" onclick="move(0)">
-        <input type = "button" value = "Влево" onclick="move(1)">
-        <input type = "button" value = "Вверх" onclick="move(2)">
-        <input type = "button" value = "Вниз" onclick="move(3)">
-        <input type = "button" value = "Хаос" onclick="move(4)">
-        <input type = "button" value = "Случайно" onclick="move(5)">
-        <input type = "button" value = "Медленнее" onclick="changeSpeed(-1)">
-        <input type = "button" value = "Быстрее" onclick="changeSpeed(1)">
-        <input type = "button" value = "Стоп" onclick="stop()">
-	</form>
+<canvas id="canvas" width="600" height="400" onclick="addFigure(event.clientX, event.clientY);">
+</canvas>
+<form>
+    <input type="button" value="Вправо" onclick="start(0)">
+    <input type="button" value="Влево" onclick="start(1)">
+    <input type="button" value="Вверх" onclick="start(2)">
+    <input type="button" value="Вниз" onclick="start(3)">
+    <input type="button" value="Хаос" onclick="start(4)">
+    <input type="button" value="Случайно" onclick="start(5)">
+    <input type="button" value="Медленнее" onclick="changeSpeed(-1)">
+    <input type="button" value="Быстрее" onclick="changeSpeed(1)">
+    <input type="button" value="Увеличить" onclick="increaseSize()">
+    <input type="button" value="Стоп" onclick="stop()">
+</form>
 </body>
 </html>
