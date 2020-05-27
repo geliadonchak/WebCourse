@@ -1,3 +1,101 @@
+class Collider {
+    static getLineFromPoints(seg) {
+        let a = seg[1] - seg[3];
+        let b = seg[2] - seg[0];
+        let c = seg[0] * seg[3] - seg[2] * seg[1];
+        return {'A': a, 'B': b, 'C': c}
+    }
+
+    static pointInSegment(x, y, seg) {
+        let min_x = Math.min(seg[0], seg[2]);
+        let max_x = Math.max(seg[0], seg[2]);
+        let min_y = Math.min(seg[1], seg[3]);
+        let max_y = Math.max(seg[1], seg[3]);
+
+        return min_x <= x && x <= max_x && min_y <= y && y <= max_y;
+    }
+
+    static collideBallBall(b1, b2) {
+        let r = Math.sqrt(Math.pow(b1.x - b2.x, 2) + Math.pow(b1.y - b2.y, 2));
+        return r <= b1.radius + b2.radius;
+    }
+
+    static collideBallStar(ball, star) {
+        let r = Math.sqrt(Math.pow(ball.x - star.x, 2) + Math.pow(ball.y - star.y, 2));
+        return r <= ball.radius + star.outerRadius;
+    }
+
+    static collideLineLine(seg1, seg2) {
+        let l1 = Collider.getLineFromPoints(seg1);
+        let l2 = Collider.getLineFromPoints(seg2);
+
+        if (l1['A'] * l2['B'] !== l2['A'] * l1['B']) {
+            let y = (l2['A'] * l1['C'] - l2['C'] * l1['A']) / (l2['B'] * l1['A'] - l2['A'] * l1['B']);
+            let x = (-l1['C'] - l1['B'] * y) / l1['A'];
+
+            if (Collider.pointInSegment(x, y, seg1) && Collider.pointInSegment(x, y, seg2)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    static collideLineFigures(fig1, fig2) {
+        let seg1 = fig1.getSegments();
+        let seg2 = fig2.getSegments();
+        for (let i = 0; i < seg1.length; i++) {
+            for (let j = 0; j < seg2.length; j++) {
+                if (Collider.collideLineLine(seg1[i], seg2[j])) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    static collideBorder(figure, w, h) {
+        if (figure instanceof Ball) {
+            return (figure.y - figure.radius) <= 0 || (figure.y + figure.radius) >= h ||
+                (figure.x - figure.radius) <= 0 || (figure.x + figure.radius) >= w;
+        } else if (figure instanceof Star) {
+            return (figure.x - figure.outerRadius) <= 0 || (figure.x + figure.outerRadius) >= w ||
+                (figure.y - figure.outerRadius) <= 0 || (figure.y + figure.outerRadius) >= h;
+        } else if (figure instanceof Rectangle) {
+            return figure.x <= 0 || figure.x + figure.w >= w || figure.y <= 0 || figure.y + figure.h >= h;
+        } else return true;
+    }
+
+    static collideBallRect(ball, rect) {
+        let xx = ball.x;
+        let yy = ball.y;
+
+        if (ball.x < rect.x) {
+            xx = rect.x;
+        } else if (ball.x > rect.x + rect.w) {
+            xx = rect.x + rect.w;
+        }
+
+        if (ball.y < rect.y) {
+            yy = rect.y;
+        } else if (ball.y > rect.y + rect.h) {
+            yy = rect.y + rect.h;
+        }
+
+        let distX = ball.x - xx;
+        let distY = ball.y - yy;
+        let distance = Math.sqrt((distX * distX) + (distY * distY));
+
+        return distance <= ball.radius;
+    }
+
+    static collideRectRect(rec1, rec2) {
+        return (rec1.x <= rec2.x && rec1.x + rec1.w >= rec2.x || rec1.x <= rec2.x + rec2.w && rec1.x + rec1.w >= rec2.x + rec2.w) &&
+            (rec1.y <= rec2.y && rec1.y + rec1.h >= rec2.y || rec1.y <= rec2.y + rec2.h && rec1.y + rec1.h >= rec2.y + rec2.h);
+    }
+}
+
 class Figure {
     constructor(x, y) {
         this.x = x;
@@ -56,6 +154,16 @@ class Ball extends Figure {
         return this.radius <= 40;
     }
 
+    collide(figure) {
+        if (figure instanceof Ball) {
+            return Collider.collideBallBall(this, figure);
+        } else if (figure instanceof Rectangle) {
+            return Collider.collideBallRect(this, figure)
+        } else if (figure instanceof Star) {
+            return Collider.collideBallStar(this, figure);
+        } else return true;
+    }
+
     draw() {
         ctx.fillStyle = this.getFillStyle();
         ctx.beginPath();
@@ -86,8 +194,17 @@ class Rectangle extends Figure {
     increaseSize() {
         this.w += 2;
         this.h += 2;
-        console.log(this.w, this.h);
         return this.w <= 70 && this.h <= 70;
+    }
+
+    collide(figure) {
+        if (figure instanceof Ball) {
+            return Collider.collideBallRect(figure, this);
+        } else if (figure instanceof Rectangle) {
+            return Collider.collideRectRect(figure, this);
+        } else if (figure instanceof Star) {
+            return Collider.collideLineFigures(this, figure);
+        } else return true;
     }
 
     draw() {
@@ -96,6 +213,15 @@ class Rectangle extends Figure {
         ctx.rect(this.x, this.y, this.w, this.h);
         ctx.closePath();
         ctx.fill();
+    }
+
+    getSegments() {
+        return [
+            [this.x, this.y, this.x, this.y + this.h],
+            [this.x, this.y + this.h, this.x + this.w, this.y + this.h],
+            [this.x + this.w, this.y + this.h, this.x + this.w, this.y],
+            [this.x + this.w, this.y, this.x, this.y]
+        ]
     }
 }
 
@@ -106,25 +232,23 @@ class Star extends Figure {
         this.strokes = this.rndNumber(5, 10);
         this.innerRadius = this.rndNumber(10, 20);
         this.outerRadius = this.rndNumber(this.innerRadius + 5, this.innerRadius + 15);
+        this.buildStar();
     }
 
     draw() {
-        ctx.fillStyle = this.color;
+        this.buildStar();
 
-        let n = this.strokes;
-        let r = this.innerRadius;
-        let R = this.outerRadius;
+        ctx.fillStyle = this.color;
 
         ctx.save();
         ctx.beginPath();
-        ctx.translate(this.x, this.y);
-        ctx.moveTo(0, 0 - r);
 
-        for (let i = 0; i < n; i++) {
-            ctx.rotate(Math.PI / n);
-            ctx.lineTo(0, 0 - R);
-            ctx.rotate(Math.PI / n);
-            ctx.lineTo(0, 0 - r);
+        let segments = this.getSegments();
+
+        ctx.moveTo(segments[0][2], segments[0][3]);
+
+        for (let i = 1; i < segments.length; i++) {
+            ctx.lineTo(segments[i][2], segments[i][3]);
         }
 
         ctx.closePath();
@@ -132,9 +256,71 @@ class Star extends Figure {
         ctx.restore();
     }
 
+    collide(figure) {
+        if (figure instanceof Ball) {
+            return Collider.collideBallStar(this, figure);
+        } else if (figure instanceof Rectangle) {
+            return Collider.collideLineFigures(this, figure);
+        } else if (figure instanceof Star) {
+            return Collider.collideLineFigures(this, figure);
+        } else return true;
+    }
+
+    addSegment(x1, y1, x2, y2) {
+        this.segments[this.segments.length] = [x1, y1, x2, y2];
+    }
+
+    buildStar() {
+        this.segments = [];
+
+        let rot = Math.PI / 2 * 3;
+        let step = Math.PI / this.strokes;
+
+        let r = this.innerRadius;
+        let R = this.outerRadius;
+
+        let x = this.x;
+        let y = this.y;
+        let x1 = this.x;
+        let y1 = this.y - R;
+
+        this.addSegment(x, y, x1, y1);
+        x = x1;
+        y = y1;
+
+        for (let i = 0; i < this.strokes; i++) {
+            x1 = this.x + Math.cos(rot) * R;
+            y1 = this.y + Math.sin(rot) * R;
+
+            this.addSegment(x, y, x1, y1);
+            x = x1;
+            y = y1;
+
+            rot += step
+
+            x1 = this.x + Math.cos(rot) * r;
+            y1 = this.y + Math.sin(rot) * r;
+
+            this.addSegment(x, y, x1, y1);
+            x = x1;
+            y = y1;
+
+            rot += step
+        }
+
+        this.addSegment(x, y, this.x, this.y - R);
+    }
+
+    getSegments() {
+        return this.segments;
+    }
+
     increaseSize() {
         this.innerRadius += 1;
         this.outerRadius += 3;
+
+        this.buildStar();
+
         return this.innerRadius <= 35;
     }
 }
@@ -198,7 +384,22 @@ function moveFigures() {
     for (let i = 0; i < figures.length; i++) {
         figures[i].move();
         figures[i].draw();
-        if (figures[i].x > w || figures[i].x < 0 || figures[i].y < 0 || figures[i].y > h) {
+
+        if (Collider.collideBorder(figures[i], w, h)) {
+            figures.splice(i--, 1);
+            continue;
+        }
+
+        let remove_i = false;
+        for (let j = 0; j < figures.length; j++) {
+            if (i !== j && figures[j].collide(figures[i])) {
+                remove_i = true;
+                figures.splice(j--, 1);
+                if (j < i) i--;
+            }
+        }
+
+        if (remove_i) {
             figures.splice(i--, 1);
         }
     }
@@ -207,8 +408,6 @@ function moveFigures() {
 function addFigure(x, y) {
     let figureClass = figuresClasses[Math.floor(Math.random() * figuresClasses.length)];
     let item = new figureClass(x, y);
-
-
     item.setDirection(direction === 5 ? rndDirection() : direction);
     figures.push(item);
     item.draw(ctx);
