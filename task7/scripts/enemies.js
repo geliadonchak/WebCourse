@@ -30,6 +30,11 @@ class Enemy extends GameObject {
 
     }
 
+    move() {
+        this.x -= this.speed;
+        this.build();
+    }
+
     addSegment(x1, y1, x2, y2) {
         this.segments.push([x1, y1, x2, y2]);
     }
@@ -51,11 +56,6 @@ class Triangle extends Enemy {
         this.build();
     }
 
-    move() {
-        this.x -= this.speed;
-        this.build();
-    }
-
     build() {
         this.segments = [];
         this.addSegment(this.x, this.y, this.x + this.size, this.y);
@@ -72,16 +72,101 @@ class Square extends Enemy {
         this.build();
     }
 
-    move() {
-        this.x -= this.speed;
-        this.build();
-    }
-
     build() {
         this.segments = [];
         this.addSegment(this.x, this.y, this.x + this.size, this.y);
         this.addSegment(this.x + this.size, this.y, this.x + this.size, this.y - this.size);
         this.addSegment(this.x + this.size, this.y - this.size, this.x, this.y - this.size);
         this.addSegment(this.x, this.y - this.size ,this.x, this.y);
+    }
+}
+
+class Star extends Enemy {
+    constructor(x, y, size, speed, hp) {
+        super(x, y, size, speed, hp);
+
+        this.color = "darkred";
+        this.strokes = 6;
+        this.innerRadius = size / 2;
+        this.outerRadius = size;
+        this.build();
+    }
+
+    draw(ctx) {
+        ctx.fillStyle = this.color;
+
+        ctx.save();
+        ctx.beginPath();
+
+        let segments = this.getSegments();
+
+        ctx.moveTo(segments[0][2], segments[0][3]);
+
+        for (let i = 1; i < segments.length; i++) {
+            ctx.lineTo(segments[i][2], segments[i][3]);
+        }
+
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    }
+
+    addSegment(x1, y1, x2, y2) {
+        this.segments.push([x1, y1, x2, y2]);
+    }
+
+    build() {
+        this.segments = [];
+
+        let rot = Math.PI / 2 * 3;
+        let step = Math.PI / this.strokes;
+
+        let r = this.innerRadius;
+        let R = this.outerRadius;
+
+        let x = this.x;
+        let y = this.y;
+        let x1 = this.x;
+        let y1 = this.y - R;
+
+        this.addSegment(x, y, x1, y1);
+        x = x1;
+        y = y1;
+
+        for (let i = 0; i < this.strokes; i++) {
+            x1 = this.x + Math.cos(rot) * R;
+            y1 = this.y + Math.sin(rot) * R;
+
+            this.addSegment(x, y, x1, y1);
+            x = x1;
+            y = y1;
+
+            rot += step
+
+            x1 = this.x + Math.cos(rot) * r;
+            y1 = this.y + Math.sin(rot) * r;
+
+            this.addSegment(x, y, x1, y1);
+            x = x1;
+            y = y1;
+
+            rot += step
+        }
+
+        this.addSegment(x, y, this.x, this.y - R);
+    }
+}
+
+class Pentagon extends Star {
+    constructor(x, y, size, speed, hp) {
+        super(x, y, size, speed, hp);
+
+        this.color = "orangered";
+        this.strokes = 5;
+        this.outerRadius = size;
+        let t = this.outerRadius * Math.sqrt(2 - 2 * Math.cos(72 * Math.PI / 180));
+        this.innerRadius = Math.floor(Math.sqrt(Math.pow(size, 2) - Math.pow(t / 2, 2)));
+
+        this.build();
     }
 }

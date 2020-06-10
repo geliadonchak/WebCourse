@@ -1,7 +1,7 @@
 class Game {
     gameGuns = [];
     gameEnemies = [];
-    gunType = 2;
+    gunType = 0;
 
     constructor(canvas) {
         this.canvas = canvas;
@@ -15,8 +15,8 @@ class Game {
 
     createEnemy() {
         let size = 50;
-        let enemy = new Triangle(this.getCanvasWidth(), this.rndNumber(size, this.getCanvasHeight()), size, 3, 99);
-        console.log(enemy);
+        let enemy = new Pentagon(this.getCanvasWidth(), this.rndNumber(size, this.getCanvasHeight()), size, 3, 99);
+
         for (let i = 0; i < this.gameEnemies.length; i++) {
             if (Collider.collideLineFigures(enemy, this.gameEnemies[i])) {
                 return this.createEnemy();

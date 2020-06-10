@@ -18,10 +18,28 @@ class Collider {
     static collideLineLine(seg1, seg2) {
         let l1 = Collider.getLineFromPoints(seg1);
         let l2 = Collider.getLineFromPoints(seg2);
+        if (l1['A'] === 0) {
+            let temp = l1;
+            l1 = l2;
+            l2 = temp;
+        }
 
         if (l1['A'] * l2['B'] !== l2['A'] * l1['B']) {
-            let y = (l2['A'] * l1['C'] - l2['C'] * l1['A']) / (l2['B'] * l1['A'] - l2['A'] * l1['B']);
-            let x = (-l1['C'] - l1['B'] * y) / l1['A'];
+            if (l1['A'] === 0) {
+                let temp = l1;
+                l1 = l2;
+                l2 = temp;
+            }
+
+            let a1 = l1['A']; l1['C'] = -l1['C'];
+            let a2 = l2['A']; l2['C'] = -l2['C'];
+
+            l1['A'] /= a1; l1['B'] /= a1; l1['C'] /= a1;
+            l2['A'] = 0; l2['B'] -= l1['B'] * a2; l2['C'] -= l1['C'] * a2;
+            l2['C'] /= l2['B']; l2['B'] /= l2['B'];
+            l1['C'] -= l1['B'] * l2['C']; l1['B'] = 0;
+
+            let x = l1['C'], y = l2['C'];
 
             if (Collider.pointInSegment(x, y, seg1) && Collider.pointInSegment(x, y, seg2)) {
                 return true;
