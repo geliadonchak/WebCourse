@@ -2,6 +2,7 @@ class Enemy extends GameObject {
     hp;
     speed;
     size;
+    xp;
 
     constructor(x, y, size, speed, hp) {
         super(x, y);
@@ -46,6 +47,15 @@ class Enemy extends GameObject {
     getSegments() {
         return this.segments;
     }
+
+    hit(bullet) {
+        this.hp -= bullet.getDamage();
+        return this.hp <= 0;
+    }
+
+    getXP() {
+        return this.xp;
+    }
 }
 
 class Triangle extends Enemy {
@@ -53,6 +63,7 @@ class Triangle extends Enemy {
         super(x, y, size, speed, hp);
 
         this.color = "lime";
+        this.xp = 1;
         this.build();
     }
 
@@ -69,6 +80,7 @@ class Square extends Enemy {
         super(x, y, size, speed, hp);
 
         this.color = "gold";
+        this.xp = 2;
         this.build();
     }
 
@@ -77,7 +89,7 @@ class Square extends Enemy {
         this.addSegment(this.x, this.y, this.x + this.size, this.y);
         this.addSegment(this.x + this.size, this.y, this.x + this.size, this.y - this.size);
         this.addSegment(this.x + this.size, this.y - this.size, this.x, this.y - this.size);
-        this.addSegment(this.x, this.y - this.size ,this.x, this.y);
+        this.addSegment(this.x, this.y - this.size, this.x, this.y);
     }
 }
 
@@ -85,6 +97,7 @@ class Star extends Enemy {
     constructor(x, y, size, speed, hp) {
         super(x, y, size, speed, hp);
 
+        this.xp = 5;
         this.color = "darkred";
         this.strokes = 6;
         this.innerRadius = size / 2;
@@ -164,9 +177,24 @@ class Pentagon extends Star {
         this.color = "orangered";
         this.strokes = 5;
         this.outerRadius = size;
+        this.xp = 3;
         let t = this.outerRadius * Math.sqrt(2 - 2 * Math.cos(72 * Math.PI / 180));
         this.innerRadius = Math.floor(Math.sqrt(Math.pow(size, 2) - Math.pow(t / 2, 2)));
 
         this.build();
+    }
+}
+
+class EnemyFactory {
+    static create(game) {
+
+        // triangle
+        let size = 50;
+        let speed = 1;
+        return new Triangle(game.getCanvasWidth(), game.rndNumber(size, game.getCanvasHeight()), size, speed, 2);
+        // return new Square(game.getCanvasWidth(), game.rndNumber(size, game.getCanvasHeight()), size, speed, 4);
+        // return new Pentagon(game.getCanvasWidth(), game.rndNumber(size, game.getCanvasHeight() - size), size, speed, 6);
+        // return new Star(game.getCanvasWidth(), game.rndNumber(size, game.getCanvasHeight() - size), size, speed, 10);
+
     }
 }
