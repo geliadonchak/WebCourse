@@ -1,0 +1,24 @@
+canvas {
+    border: black solid 1px;
+    background-color: ghostwhite;
+}
+
+.content {
+    width: 1000px;
+    height: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+button {
+    background-color: white;
+    color: black;
+    border: 2px solid lightsteelblue;
+    border-radius: 4px;
+    width: 170px;
+    height: 30px;
+}
+
+button:focus {
+    outline: lightsteelblue 2px;
+}

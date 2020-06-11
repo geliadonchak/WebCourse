@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>ShooterGame</title>
@@ -7,33 +8,22 @@
     <script src="scripts/guns.js"></script>
     <script src="scripts/enemies.js"></script>
     <script src="scripts/collider.js"></script>
-
-    <style>
-        canvas {
-            border: black solid 1px;
-            background-color: ghostwhite;
-        }
-
-        .content {
-            width: 1000px;
-            height: 500px;
-            margin: 0 auto;
-        }
-
-        button {
-            background-color: bisque;
-            border: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="styles/main.css">
 </head>
+
 <body onload="init();">
 <div class="content">
     <canvas id="gameField" width="1000" height="500"></canvas>
     <br>
-    <button class="changeGun" id="gunType0" style="background-color: purple;">Q Пушка</button>
+    <button class="changeGun" id="gunType0" style="background-color: lightsteelblue;">Q Пушка</button>
     <button class="changeGun" id="gunType1">W Черная дыра</button>
     <button class="changeGun" id="gunType2">E Пулемет</button>
     <button id="pause">S Пауза</button>
+    <br><br>
+    <button id="restart">Начать заново</button>
+    <button id="changePlayer">Сменить игрока</button>
+    <button id="showResults">Покзать результаты</button>
 </div>
 </body>
+
 </html>

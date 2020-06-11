@@ -280,7 +280,7 @@ function init() {
                 buttons[j].removeAttribute("style");
             }
 
-            changeGunButtons[i].style.cssText = "background-color: purple;";
+            changeGunButtons[i].style.cssText += "background-color: lightsteelblue;";
         })
     }
 
