@@ -7,7 +7,8 @@ class Game {
 
     gunType = 0;
     started = false;
-    machineGunAmmo = 15;
+    machineGunAmmo = 30;
+    killed = false;
 
     gunAvailability = {
         0: true,
@@ -20,25 +21,42 @@ class Game {
         this.ctx = canvas.getContext("2d");
 
         this.player = player;
-        this.lives = 1;
+        this.lives = 5;
         this.xp = 0;
         this.lvl = 1;
+
+        this.spawnTimer = null;
 
         this.initGame();
     }
 
     initGame() {
         this.guns.push(new Cannon(0, this.canvas.clientHeight, this.canvas.clientWidth, this.canvas.clientHeight));
-
-        this.enemies.push(this.createEnemy());
-        this.enemies.push(this.createEnemy());
-        this.enemies.push(this.createEnemy());
-
         this.changeGameState();
+    }
+
+    spawnTimerFunction() {
+        let game = this;
+        this.enemies.push(this.createEnemy());
+        this.spawnTimer = setTimeout(function () {
+            game.spawnTimerFunction();
+        }, this.rndNumber(500, 3000 - (game.lvl - 1) * 50));
+    }
+
+    startSpawn() {
+        let game = this;
+        this.spawnTimer = setTimeout(function () {
+            game.spawnTimerFunction();
+        }, this.rndNumber(1000, 3000 - (game.lvl - 1) * 120));
+    }
+
+    stopSpawn() {
+        clearTimeout(this.spawnTimer);
     }
 
     stopTimers() {
         this.started = false;
+        this.stopSpawn();
         clearInterval(this.timer);
 
         for (let i = 0; i < 3; i++) {
@@ -66,6 +84,10 @@ class Game {
         return from + Math.floor(Math.random() * (to - from));
     }
 
+    rndFloatNumber(from, to) {
+        return from + Math.random() * (to - from);
+    }
+
     shoot() {
         if (!this.started || this.lives <= 0) return;
 
@@ -79,7 +101,7 @@ class Game {
             if (this.gunType !== 2 || this.machineGunAmmo === 0) {
                 this.gunAvailability[this.gunType] = false;
                 this.drawAvailability(this.gunType, bullet.getTimeout());
-                this.reloadTimers[this.gunType] = (new ReloadTimer(bullet.getTimeout(), this, this.gunType));
+                this.reloadTimers[this.gunType] = (new ReloadTimer(bullet.getTimeout() - this.lvl * 50, this, this.gunType));
             }
         }
     }
@@ -111,6 +133,7 @@ class Game {
         this.stopTimers();
 
         disableButtons();
+        this.killed = true;
 
         setTimeout(function () {
             document.getElementById("showResults").click();
@@ -203,7 +226,7 @@ class Game {
     }
 
     draw() {
-        if (!this.started || this.lives <= 0) return;
+        if (!this.started || this.lives <= 0 || this.killed) return;
 
         this.drawBackground();
         this.drawArray(this.enemies);
@@ -215,6 +238,8 @@ class Game {
 
 
     move() {
+        if (this.killed) return;
+
         this.moveArray(this.enemies);
         this.moveArray(this.guns);
 
@@ -227,6 +252,11 @@ class Game {
                     if (enemy.hit(bullet)) {
                         this.xp += enemy.getXP();
                         this.enemies.splice(j--, 1);
+
+                        if (this.xp >= this.lvl * 10 && this.lvl !== 10) {
+                            this.lvl++;
+                            this.lives += Math.floor((this.lvl - 1) / 3);
+                        }
                     }
 
                     if (!(bullet instanceof CannonBlackHole)) {
@@ -243,7 +273,7 @@ class Game {
     }
 
     changeGameState() {
-        if (this.lives <= 0) return;
+        if (this.lives <= 0 || this.killed) return;
 
         if (!this.started) {
             this.started = true;
@@ -252,8 +282,11 @@ class Game {
             this.timer = setInterval(function (game) {
                 game.move();
             }, 10, this);
+
+            this.startSpawn();
         } else {
             this.started = false;
+            this.stopSpawn();
             clearInterval(this.timer);
             this.drawPause();
         }
@@ -282,7 +315,7 @@ class ReloadTimer {
     reloadGun() {
         this.game.gunAvailability[this.gunType] = true;
         if (this.gunType === 2) {
-            this.game.machineGunAmmo = 15;
+            this.game.machineGunAmmo = 30;
         }
     }
 
@@ -304,7 +337,7 @@ class ReloadTimer {
     }
 
     stop() {
-        clearInterval(this.currentTimeout);
+        clearTimeout(this.currentTimeout);
     }
 }
 
@@ -422,6 +455,7 @@ function init() {
     document.getElementById("changePlayer").addEventListener('click', () => {
         restoreButtons();
         game.stopTimers();
+        game.killed = true;
         disableActions(canvas);
         document.getElementsByClassName("helloScreen")[0].style.cssText = "";
         document.getElementsByClassName("content")[0].style.cssText = "display: none";

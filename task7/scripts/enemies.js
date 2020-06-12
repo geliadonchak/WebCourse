@@ -4,11 +4,10 @@ class Enemy extends GameObject {
     size;
     xp;
 
-    constructor(x, y, size, speed, hp) {
+    constructor(x, y, size, speed) {
         super(x, y);
         this.size = size;
         this.speed = speed;
-        this.hp = hp;
         this.segments = [];
     }
 
@@ -59,11 +58,12 @@ class Enemy extends GameObject {
 }
 
 class Triangle extends Enemy {
-    constructor(x, y, size, speed, hp) {
-        super(x, y, size, speed, hp);
+    constructor(x, y, size, speed) {
+        super(x, y, size, speed);
 
         this.color = "lime";
         this.xp = 1;
+        this.hp = 2;
         this.build();
     }
 
@@ -76,12 +76,13 @@ class Triangle extends Enemy {
 }
 
 class Square extends Enemy {
-    constructor(x, y, size, speed, hp) {
-        super(x, y, size, speed, hp);
+    constructor(x, y, size, speed) {
+        super(x, y, size, speed);
 
         this.color = "gold";
         this.xp = 2;
         this.build();
+        this.hp = 4;
     }
 
     build() {
@@ -94,12 +95,13 @@ class Square extends Enemy {
 }
 
 class Star extends Enemy {
-    constructor(x, y, size, speed, hp) {
-        super(x, y, size, speed, hp);
+    constructor(x, y, size, speed) {
+        super(x, y, size, speed);
 
         this.xp = 5;
         this.color = "darkred";
         this.strokes = 6;
+        this.hp = 8;
         this.innerRadius = size / 2;
         this.outerRadius = size;
         this.build();
@@ -171,13 +173,14 @@ class Star extends Enemy {
 }
 
 class Pentagon extends Star {
-    constructor(x, y, size, speed, hp) {
-        super(x, y, size, speed, hp);
+    constructor(x, y, size, speed) {
+        super(x, y, size, speed);
 
         this.color = "orangered";
         this.strokes = 5;
         this.outerRadius = size;
         this.xp = 3;
+        this.hp = 6;
         let t = this.outerRadius * Math.sqrt(2 - 2 * Math.cos(72 * Math.PI / 180));
         this.innerRadius = Math.floor(Math.sqrt(Math.pow(size, 2) - Math.pow(t / 2, 2)));
 
@@ -187,14 +190,27 @@ class Pentagon extends Star {
 
 class EnemyFactory {
     static create(game) {
+        let levelInfo = levelsTable[game.lvl];
+        let rand = game.rndFloatNumber(0, 1);
 
-        // triangle
-        let size = 50;
-        let speed = 1;
-        return new Triangle(game.getCanvasWidth(), game.rndNumber(size, game.getCanvasHeight()), size, speed, 2);
-        // return new Square(game.getCanvasWidth(), game.rndNumber(size, game.getCanvasHeight()), size, speed, 4);
-        // return new Pentagon(game.getCanvasWidth(), game.rndNumber(size, game.getCanvasHeight() - size), size, speed, 6);
-        // return new Star(game.getCanvasWidth(), game.rndNumber(size, game.getCanvasHeight() - size), size, speed, 10);
+        for (let i = 0; i < levelInfo.length; i++) {
+            let info = levelInfo[i];
+            if (rand <= info['probability']) {
+                return this.getObject(game, info['type'], info['size'], info['speed']);
+            }
+        }
+    }
 
+    static getObject(game, className, size, speed) {
+        switch (className) {
+            case 'triangle':
+                return new Triangle(game.getCanvasWidth(), game.rndNumber(size, game.getCanvasHeight()), size, speed);
+            case 'square':
+                return new Square(game.getCanvasWidth(), game.rndNumber(size, game.getCanvasHeight()), size, speed);
+            case 'pentagon':
+                return new Pentagon(game.getCanvasWidth(), game.rndNumber(size, game.getCanvasHeight() - size), size, speed);
+            case 'star':
+                return new Star(game.getCanvasWidth(), game.rndNumber(size, game.getCanvasHeight() - size), size, speed);
+        }
     }
 }
