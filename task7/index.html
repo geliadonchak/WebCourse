@@ -11,8 +11,17 @@
     <link rel="stylesheet" href="styles/main.css">
 </head>
 
-<body onload="init();">
-<div class="content">
+<body>
+
+<div class="helloScreen">
+    <div class="vertical-center">
+        <label for="nickname">Введите никнейм</label><br>
+        <input id="nickname" type="text" value="nickname"><br>
+        <button id="startGame" onclick="init()">Начать игру</button>
+    </div>
+</div>
+
+<div class="content" style="display: none">
     <canvas id="gameField" width="1000" height="500"></canvas>
     <br>
     <button class="changeGun" id="gunType0" style="background-color: lightsteelblue;">Q Пушка</button>
@@ -20,7 +29,7 @@
     <button class="changeGun" id="gunType2">E Пулемет</button>
     <button id="pause">S Пауза</button>
     <br><br>
-    <button id="restart">Начать заново</button>
+    <button id="restart">R Начать заново</button>
     <button id="changePlayer">Сменить игрока</button>
     <button id="showResults">Покзать результаты</button>
 </div>

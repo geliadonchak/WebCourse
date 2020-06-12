@@ -1,3 +1,7 @@
+body {
+    font-family: "Comic Sans MS", serif;
+}
+
 canvas {
     border: black solid 1px;
     background-color: ghostwhite;
@@ -6,7 +10,7 @@ canvas {
 .content {
     width: 1000px;
     height: 500px;
-    margin: 0 auto;
+    margin: auto;
     text-align: center;
 }
 
@@ -21,4 +25,41 @@ button {
 
 button:focus {
     outline: lightsteelblue 2px;
+}
+
+button#startGame:focus {
+    background-color: lightsteelblue;
+}
+
+.helloScreen {
+    width: 500px;
+    height: 500px;
+    margin: auto;
+    position: relative;
+}
+
+.vertical-center {
+    text-align: center;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+}
+
+input#nickname {
+    color: #7E9EC9;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+input#nickname,
+label[for="nickname"] {
+    text-align: center;
+    font-size: 36pt;
+}
+
+button#startGame {
+    margin-top: 15px;
+    font-size: 20pt;
+    width: 100%;
+    height: 50px;
 }

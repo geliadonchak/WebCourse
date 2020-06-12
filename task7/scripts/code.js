@@ -1,8 +1,13 @@
 class Game {
-    gameGuns = [];
-    gameEnemies = [];
+    guns = [];
+    enemies = [];
+    reloadTimers = {
+        0: null, 1: null, 2: null
+    };
+
     gunType = 0;
     started = false;
+    machineGunAmmo = 15;
 
     gunAvailability = {
         0: true,
@@ -10,25 +15,46 @@ class Game {
         2: true
     }
 
-    constructor(canvas) {
+    constructor(canvas, player) {
         this.canvas = canvas;
         this.ctx = canvas.getContext("2d");
-        this.gameGuns.push(new Cannon(0, canvas.clientHeight, canvas.clientWidth, canvas.clientHeight));
 
-        this.gameEnemies.push(this.createEnemy());
-        this.gameEnemies.push(this.createEnemy());
-        this.gameEnemies.push(this.createEnemy());
-
-        this.lives = 5;
+        this.player = player;
+        this.lives = 1;
         this.xp = 0;
         this.lvl = 1;
+
+        this.initGame();
+    }
+
+    initGame() {
+        this.guns.push(new Cannon(0, this.canvas.clientHeight, this.canvas.clientWidth, this.canvas.clientHeight));
+
+        this.enemies.push(this.createEnemy());
+        this.enemies.push(this.createEnemy());
+        this.enemies.push(this.createEnemy());
+
+        this.changeGameState();
+    }
+
+    stopTimers() {
+        this.started = false;
+        clearInterval(this.timer);
+
+        for (let i = 0; i < 3; i++) {
+            if (this.reloadTimers[i]) {
+                this.reloadTimers[i].stop();
+            }
+
+            this.drawAvailability(i, 0);
+        }
     }
 
     createEnemy() {
         let enemy = EnemyFactory.create(this);
 
-        for (let i = 0; i < this.gameEnemies.length; i++) {
-            if (Collider.collideLineFigures(enemy, this.gameEnemies[i])) {
+        for (let i = 0; i < this.enemies.length; i++) {
+            if (Collider.collideLineFigures(enemy, this.enemies[i])) {
                 return this.createEnemy();
             }
         }
@@ -36,6 +62,59 @@ class Game {
         return enemy;
     }
 
+    rndNumber(from, to) {
+        return from + Math.floor(Math.random() * (to - from));
+    }
+
+    shoot() {
+        if (!this.started || this.lives <= 0) return;
+
+        if (this.gunAvailability[this.gunType]) {
+            let bullet = GunFabric.create(this.gunType, this.guns[0]);
+
+            this.machineGunAmmo -= this.gunType === 2;
+
+            this.guns.push(bullet);
+
+            if (this.gunType !== 2 || this.machineGunAmmo === 0) {
+                this.gunAvailability[this.gunType] = false;
+                this.drawAvailability(this.gunType, bullet.getTimeout());
+                this.reloadTimers[this.gunType] = (new ReloadTimer(bullet.getTimeout(), this, this.gunType));
+            }
+        }
+    }
+
+    moveArray(arr) {
+        for (let i = 0; i < arr.length; i++) {
+            arr[i].move();
+
+            if (arr[i].checkCollapse()) {
+                if (arr[i] instanceof Enemy) {
+                    this.lives--;
+                    if (!this.lives) {
+                        this.finishGame();
+                        return;
+                    }
+
+                }
+
+                arr.splice(i--, 1);
+            }
+        }
+    }
+
+    finishGame() {
+        this.player.write(this.xp);
+
+        this.drawFinishScreen();
+        disableActions(this.canvas);
+        this.stopTimers();
+    }
+
+
+    /**
+     * DRAW FUNCTIONS
+     */
     drawInterface() {
         let ctx = this.ctx;
         ctx.save();
@@ -52,38 +131,15 @@ class Game {
         ctx.fillText("XP: " + this.xp, 8, 50);
         ctx.fillStyle = "white";
         ctx.fillText(this.lvl + " lvl", 5, this.getCanvasHeight() - 5);
+        ctx.textAlign = "right";
+        ctx.fillStyle = "dimgray";
+        ctx.font = "20px Comic Sans MS";
+        ctx.fillText(this.player.nickname, this.canvas.clientWidth - 5, 25);
 
         ctx.restore();
     }
 
-    rndNumber(from, to) {
-        return from + Math.floor(Math.random() * (to - from));
-    }
-
-    drawBackground() {
-        let ctx = this.ctx;
-
-        ctx.save();
-        ctx.fillStyle = "ghostwhite";
-        ctx.fillRect(0, 0, this.canvas.clientWidth, this.canvas.clientHeight);
-        ctx.restore();
-    }
-
-    shoot() {
-        if (!this.started) return;
-
-        if (this.gunAvailability[this.gunType]) {
-            let bullet = GunFabric.create(this.gunType, this.gameGuns[0]);
-
-            this.gunAvailability[this.gunType] = false;
-            this.showAvailability(this.gunType, bullet.getTimeout());
-
-            this.gameGuns.push(bullet);
-            new ReloadTimer(bullet.getTimeout(), this, this.gunType);
-        }
-    }
-
-    showAvailability(gunType, time) {
+    drawAvailability(gunType, time) {
         let gunChangeText = {
             0: "Q Пушка",
             1: "W Черная дыра",
@@ -95,8 +151,29 @@ class Game {
         document.getElementById("gunType" + gunType).innerText = text;
     }
 
-    changeGun(gunType) {
-        this.gunType = gunType;
+    drawBackground() {
+        let ctx = this.ctx;
+
+        ctx.save();
+        ctx.fillStyle = "ghostwhite";
+        ctx.fillRect(0, 0, this.canvas.clientWidth, this.canvas.clientHeight);
+        ctx.restore();
+    }
+
+    drawFinishScreen() {
+        let ctx = this.ctx;
+
+        this.drawBackground();
+
+        ctx.save();
+
+        ctx.fillStyle = "dimgray";
+        ctx.font = "50px Comic Sans MS";
+        ctx.fillText("Битва проиграна :(", this.canvas.clientWidth / 2 - 230, this.canvas.clientHeight / 2);
+        ctx.font = "25px Comic Sans MS";
+        ctx.fillText(this.player.nickname + ": " + this.xp + " XP", this.canvas.clientWidth / 2 - 230, this.canvas.clientHeight / 2 + 50);
+
+        ctx.restore();
     }
 
     drawArray(arr) {
@@ -105,49 +182,51 @@ class Game {
         }
     }
 
-    moveArray(arr) {
-        for (let i = 0; i < arr.length; i++) {
-            arr[i].move();
+    drawPause() {
+        let ctx = this.ctx;
 
-            if (arr[i].checkCollapse()) {
-                if (arr[i] instanceof Enemy) {
-                    this.lives--;
-                }
+        ctx.save();
 
-                arr.splice(i--, 1);
-            }
-        }
+        this.drawBackground();
+
+        ctx.fillStyle = "dimgray";
+        ctx.font = "50px Comic Sans MS";
+        ctx.fillText("PAUSE", this.canvas.clientWidth / 2 - 90, this.canvas.clientHeight / 2);
+
+        ctx.restore();
     }
 
     draw() {
-        if (!this.started) return;
+        if (!this.started || this.lives <= 0) return;
 
         this.drawBackground();
-        this.drawArray(this.gameEnemies);
-        this.drawArray(this.gameGuns);
-        this.gameGuns[0].draw(this.ctx);
+        this.drawArray(this.enemies);
+        this.drawArray(this.guns);
+        this.guns[0].draw(this.ctx);
 
         this.drawInterface();
     }
 
-    move() {
-        this.moveArray(this.gameEnemies);
-        this.moveArray(this.gameGuns);
 
-        for (let i = 1; i < this.gameGuns.length; i++) {
-            for (let j = 0; j < this.gameEnemies.length; j++) {
-                let bullet = this.gameGuns[i];
-                let enemy = this.gameEnemies[j];
+    move() {
+        this.moveArray(this.enemies);
+        this.moveArray(this.guns);
+
+        for (let i = 1; i < this.guns.length; i++) {
+            for (let j = 0; j < this.enemies.length; j++) {
+                let bullet = this.guns[i];
+                let enemy = this.enemies[j];
 
                 if (Collider.collideBulletEnemy(bullet, enemy)) {
                     if (enemy.hit(bullet)) {
                         this.xp += enemy.getXP();
-                        this.gameEnemies.splice(j--, 1);
+                        this.enemies.splice(j--, 1);
                     }
 
                     if (!(bullet instanceof CannonBlackHole)) {
-                        this.gameGuns.splice(i, 1);
+                        this.guns.splice(i, 1);
                         i = (i !== 1) ? i - 1 : i;
+                        break;
                     }
                 }
 
@@ -157,22 +236,9 @@ class Game {
         this.draw();
     }
 
-    drawPause() {
-        let ctx = this.ctx;
+    changeGameState() {
+        if (this.lives <= 0) return;
 
-        ctx.save();
-
-        ctx.fillStyle = "ghostwhite";
-        ctx.fillRect(0, 0, this.canvas.clientWidth, this.canvas.clientHeight);
-
-        ctx.fillStyle = "dimgray";
-        ctx.font = "50px Comic Sans MS";
-        ctx.fillText("PAUSE", this.canvas.clientWidth / 2 - 90, this.canvas.clientHeight / 2);
-
-        ctx.restore();
-    }
-
-    pauseToggle() {
         if (!this.started) {
             this.started = true;
             this.draw();
@@ -202,23 +268,37 @@ class ReloadTimer {
         this.game = game;
         this.gunType = gunType;
 
+        this.currentTimeout = null;
+
         this.start();
     }
 
+    reloadGun() {
+        this.game.gunAvailability[this.gunType] = true;
+        if (this.gunType === 2) {
+            this.game.machineGunAmmo = 15;
+        }
+    }
+
     start() {
-        setTimeout(function (timer, game, gunType) {
+        this.currentTimeout = setTimeout(function (timer, game, gunType) {
             if (game.started) {
                 timer.currentTime -= 50;
             }
 
-            game.showAvailability(gunType, timer.currentTime);
+            game.drawAvailability(gunType, timer.currentTime);
 
             if (timer.currentTime > 0) {
                 timer.start();
             } else {
-                game.gunAvailability[gunType] = true;
+                timer.reloadGun();
+                timer.stop();
             }
         }, 50, this, this.game, this.gunType);
+    }
+
+    stop() {
+        clearInterval(this.currentTimeout);
     }
 }
 
@@ -253,9 +333,44 @@ class GameObject {
     }
 }
 
+class Player {
+    constructor(nickname) {
+        this.nickname = nickname;
+    }
+
+    write(score) {
+        let savedScore = getCookie(this.nickname);
+        if (!savedScore || savedScore < score) {
+            document.cookie = this.nickname + "=" + score;
+        }
+    }
+}
+
+function disableActions(canvas) {
+    canvas.addEventListener('mousemove', () => {});
+    canvas.addEventListener('click', () => {});
+    document.getElementById("pause").addEventListener('click', () => {});
+    document.getElementById("changePlayer").addEventListener('click', () => {});
+    document.getElementById("restart").addEventListener('click', () => {});
+    window.addEventListener('keydown', () => {});
+}
+
+function restoreButtons() {
+    let buttons = document.getElementsByClassName("changeGun");
+    buttons[0].style.cssText += "background-color: lightsteelblue;";
+    for (let j = 1; j < buttons.length; j++) {
+        buttons[j].removeAttribute("style");
+    }
+}
+
 function init() {
+    document.getElementsByClassName("helloScreen")[0].style.cssText = "display: none";
+    document.getElementsByClassName("content")[0].style.cssText = "";
+
+    let nickname = document.getElementById("nickname").value;
+    let player = new Player(nickname);
     let canvas = document.getElementById("gameField");
-    let game = new Game(canvas);
+    let game = new Game(canvas, player);
 
     game.draw();
 
@@ -273,7 +388,7 @@ function init() {
     let changeGunButtons = document.getElementsByClassName("changeGun");
     for (let i = 0; i < changeGunButtons.length; i++) {
         changeGunButtons[i].addEventListener('click', () => {
-            game.changeGun(+changeGunButtons[i].id.replace("gunType", ""));
+            game.gunType = +changeGunButtons[i].id.replace("gunType", "");
 
             let buttons = document.getElementsByClassName("changeGun");
             for (let j = 0; j < buttons.length; j++) {
@@ -285,7 +400,21 @@ function init() {
     }
 
     document.getElementById("pause").addEventListener('click', () => {
-        game.pauseToggle();
+        game.changeGameState();
+    });
+
+    document.getElementById("changePlayer").addEventListener('click', () => {
+        restoreButtons();
+        game.stopTimers();
+        disableActions(canvas);
+        document.getElementsByClassName("helloScreen")[0].style.cssText = "";
+        document.getElementsByClassName("content")[0].style.cssText = "display: none";
+    });
+
+    document.getElementById("restart").addEventListener('click', () => {
+        restoreButtons();
+        game.stopTimers();
+        game = new Game(canvas, player);
     })
 
     window.addEventListener('keydown', event => {
@@ -306,8 +435,16 @@ function init() {
             case 'S':
                 document.getElementById("pause").click();
                 break;
+            case 'r':
+            case 'R':
+                document.getElementById("restart").click();
+                break;
         }
     });
+}
 
-    document.getElementById("pause").click();
+function getCookie(name) {
+    let value = `; ${document.cookie}`;
+    let parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
 }

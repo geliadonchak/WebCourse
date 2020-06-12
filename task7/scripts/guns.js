@@ -140,11 +140,10 @@ class CannonMachineGun extends CannonBullet {
     constructor(cannon) {
         super(cannon);
         this.radius = 5;
-
         this.v = 12;
 
         this.damage = 1;
-        this.timeout = 100;
+        this.timeout = 7000;
 
         let r = Math.sqrt(Math.pow(this.x_start, 2) + Math.pow(this.y_start - this.cannon.canvasHeight, 2));
         this.dx = this.x_start / r;
