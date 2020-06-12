@@ -109,6 +109,12 @@ class Game {
         this.drawFinishScreen();
         disableActions(this.canvas);
         this.stopTimers();
+
+        disableButtons();
+
+        setTimeout(function () {
+            document.getElementById("showResults").click();
+        }, 3000);
     }
 
 
@@ -347,12 +353,20 @@ class Player {
 }
 
 function disableActions(canvas) {
-    canvas.addEventListener('mousemove', () => {});
-    canvas.addEventListener('click', () => {});
-    document.getElementById("pause").addEventListener('click', () => {});
-    document.getElementById("changePlayer").addEventListener('click', () => {});
-    document.getElementById("restart").addEventListener('click', () => {});
-    window.addEventListener('keydown', () => {});
+    canvas.addEventListener('mousemove', () => {
+    });
+    canvas.addEventListener('click', () => {
+    });
+    document.getElementById("pause").addEventListener('click', () => {
+    });
+    document.getElementById("changePlayer").addEventListener('click', () => {
+    });
+    document.getElementById("restart").addEventListener('click', () => {
+    });
+    document.getElementById("showResults").addEventListener('click', () => {
+    });
+    window.addEventListener('keydown', () => {
+    });
 }
 
 function restoreButtons() {
@@ -400,7 +414,9 @@ function init() {
     }
 
     document.getElementById("pause").addEventListener('click', () => {
-        game.changeGameState();
+        if (game.lives > 0) {
+            game.changeGameState();
+        }
     });
 
     document.getElementById("changePlayer").addEventListener('click', () => {
@@ -416,6 +432,24 @@ function init() {
         game.stopTimers();
         game = new Game(canvas, player);
     })
+
+    document.getElementById("showResults").addEventListener('click', () => {
+        if (game.lives > 0 && game.started) {
+            game.changeGameState();
+        }
+        showResults();
+    });
+
+    document.getElementById("resultsBack").addEventListener('click', () => {
+        document.getElementsByClassName("content")[0].style.cssText = "";
+        document.getElementsByClassName("resultsScreen")[0].style.cssText = "display: none";
+
+        if (game.lives > 0) {
+            game.changeGameState();
+        }
+
+        enableButtons();
+    });
 
     window.addEventListener('keydown', event => {
         switch (event.key) {
@@ -435,10 +469,10 @@ function init() {
             case 'S':
                 document.getElementById("pause").click();
                 break;
-            case 'r':
-            case 'R':
-                document.getElementById("restart").click();
-                break;
+            // case 'r':
+            // case 'R':
+            //     document.getElementById("restart").click();
+            //     break;
         }
     });
 }
@@ -447,4 +481,53 @@ function getCookie(name) {
     let value = `; ${document.cookie}`;
     let parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+function showResults() {
+    document.getElementsByClassName("content")[0].style.cssText = "display: none";
+    document.getElementsByClassName("resultsScreen")[0].style.cssText = "";
+
+    let cookies = document.cookie.split('; ');
+
+    let results = [];
+    for (let i = 0; i < cookies.length; i++) {
+        let temp = cookies[i].split('=');
+        results.push({'name': temp[0], 'score': +temp[1]});
+    }
+
+    results.sort(function (a, b) {
+        if (a.score === b.score) return 0;
+        return a.score < b.score ? 1 : -1;
+    });
+
+    if (document.cookie.trim() === "") {
+        results = [];
+    }
+
+    let table = document.getElementById("resultsBody");
+    table.innerHTML = "";
+    for (let i = 0; i < results.length; i++) {
+        if (i === 10) return;
+        table.innerHTML += `<tr><td>${i + 1}</td><td>${results[i].name}</td><td>${results[i].score}</td></tr>`;
+    }
+}
+
+function disableButtons() {
+    document.getElementById("gunType0").style.cssText = "display: none;";
+    document.getElementById("gunType1").style.cssText = "display: none;";
+    document.getElementById("gunType2").style.cssText = "display: none;";
+    document.getElementById("pause").style.cssText = "display: none;";
+    document.getElementById("restart").style.cssText = "display: none;";
+    document.getElementById("changePlayer").style.cssText = "display: none;";
+    document.getElementById("showResults").style.cssText = "display: none;";
+}
+
+function enableButtons() {
+    document.getElementById("gunType0").style.cssText = "";
+    document.getElementById("gunType1").style.cssText = "";
+    document.getElementById("gunType2").style.cssText = "";
+    document.getElementById("pause").style.cssText = "";
+    document.getElementById("restart").style.cssText = "";
+    document.getElementById("changePlayer").style.cssText = "";
+    document.getElementById("showResults").style.cssText = "";
 }

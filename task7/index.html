@@ -29,10 +29,29 @@
     <button class="changeGun" id="gunType2">E Пулемет</button>
     <button id="pause">S Пауза</button>
     <br><br>
-    <button id="restart">R Начать заново</button>
+    <button id="restart">Начать заново</button>
     <button id="changePlayer">Сменить игрока</button>
     <button id="showResults">Покзать результаты</button>
 </div>
+
+
+<div class="resultsScreen" style="display: none">
+    <p id="resultsText">Топ 10 игроков</p>
+    <table>
+        <thead>
+        <tr>
+            <td>Место</td>
+            <td>Никнейм</td>
+            <td>Результат</td>
+        </tr>
+        </thead>
+
+        <tbody id="resultsBody">
+        </tbody>
+    </table>
+    <button id="resultsBack">Вернуться к игре</button>
+</div>
+
 </body>
 
 </html>
